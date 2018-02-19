@@ -6,7 +6,7 @@ Install the package into the Data project via Package Manager Console:
 
 `PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-This will bring in all neccesary depedendent packages. Some dependent packages may be out of date. To bring them up to date run:
+This will bring in all necessary dependent packages. Some dependent packages may be out of date. To bring them up to date run:
 
 `PM> Update-Package`
 
@@ -34,3 +34,7 @@ If these commands result in a errors then be sure to install the following packa
 `PM> Install-Package Microsoft.EntityFrameworkCore.Design`
 
 If errors continue then change then set the data project as the startup project.
+
+#### Moving Configuration Info Out of DbContext
+
+In the file `NorthwindContext.cs` replace the `OnConfiguring()` method with a constructor that takes a `DbContextOptions` parameter that lets the config info be passed in upon construction. See the Web App Startup.cs for usage.

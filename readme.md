@@ -49,3 +49,12 @@ Create the initial solution as a "Blank Solution" so that additional projects ca
    3. Authentication should be **No Authentication**.
    4. **Enable Docker Support** should be unchecked.
 
+### Git Tips for Initial commit/push existing repo
+
+1. Create project and commit at interesting steps.
+2. Create a new repository (github for example) with no starter files.
+3. From command line in folder where .git is (or a subdirectory) enter the following commands:
+   * `> git remote add origin git@github.com:user/repo.git`
+   * `> git push -u origin master`
+
+Where the `user` is your github userid and the `repo` is the name of your new repo.

@@ -22,10 +22,12 @@ namespace NorthwindCore.Web
             services.AddMvc();
 
             // inject the Northwind Db Context into the app using the Configuration instance
-            //  ToDo: The connection string should be set as an environment variable so "secret"
-            //      data isn't exposed in code.
+            //  Default: appsettings.json/ConnectionStrings/NorthwindConnection = "Data Source=R2D2;Initial Catalog=Northwind;Integrated Security=False;User ID=sa;Password=lexie07;"
+            //  environment var: key=ConnectionStrings:NorthwindConnection value=Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;
+            //      environ variables override appsettings following .NET config conventions
+            string connStr = Configuration.GetConnectionString("NorthwindConnection");
             services.AddDbContext<NorthwindContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("NorthwindConnection"))
+                options => options.UseSqlServer(connStr)
                 );
         }
 

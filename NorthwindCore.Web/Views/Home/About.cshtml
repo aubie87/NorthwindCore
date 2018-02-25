@@ -4,4 +4,52 @@
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<ul id="myList">
+    <li>Alpha</li>
+    <li>Beta</li>
+    <li>Gamma</li>
+    <li>Zeta</li>
+</ul>
+
+<div>List of Cars</div>
+<ul class="carList">
+    <li>Buick</li>
+    <li>Jeep</li>
+    <li>Range Rover</li>
+    <li>Tesla</li>
+</ul>
+
+<div>List of Languages</div>
+<ul name="languageList">
+    <li>Ada</li>
+    <li>c++</li>
+    <li>Pascal</li>
+</ul>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log('document is ready');
+    });
+
+    console.log('about file opened');
+
+    // # selector finds IDs
+    var listItems = $("#myList li");
+    listItems.on('click', function () {
+        console.log('You clicked: ' + $(this).text());
+    });
+
+    // . selector finds classes
+    var carItems = $('.carList li');
+    carItems.on('click', function () {
+        console.log('car clicked: ' + $(this).text());
+    });
+
+    // select by name
+    var languageItems = $('ul[name=languageList] li');
+    languageItems.on('click', function () {
+        console.log('language: ' + $(this).text());
+    });
+
+</script>

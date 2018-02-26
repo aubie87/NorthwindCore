@@ -1,11 +1,26 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace NorthwindCore.Data.Domain
 {
     public partial class NorthwindContext : DbContext
     {
+        public static readonly LoggerFactory MyConsoleLoggerFactory =
+            new LoggerFactory(new[]
+            {
+                new ConsoleLoggerProvider((category, level) =>
+                    category == DbLoggerCategory.Database.Command.Name // only show sql cmds
+                    && level == LogLevel.Information, true)
+            });
+
+        public NorthwindContext()
+            : base(new DbContextOptionsBuilder<NorthwindContext>()
+                  .UseSqlServer("Data Source = R2D2; Initial Catalog = Northwind; Integrated Security = False; User ID = sa; Password=lexie07;")
+                  .Options)
+        {
+        }
+
         public NorthwindContext(DbContextOptions<NorthwindContext> options)
             : base(options)
         {
@@ -25,14 +40,12 @@ namespace NorthwindCore.Data.Domain
         public virtual DbSet<Suppliers> Suppliers { get; set; }
         public virtual DbSet<Territories> Territories { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer(@"Data Source=R2D2;Initial Catalog=Northwind;Integrated Security=False;User ID=sa;Password=lexie07;");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseLoggerFactory(MyConsoleLoggerFactory)
+                .EnableSensitiveDataLogging(true);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

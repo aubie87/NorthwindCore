@@ -38,3 +38,9 @@ If errors continue then change then set the data project as the startup project.
 #### Moving Configuration Info Out of DbContext
 
 In the file `NorthwindContext.cs` replace the `OnConfiguring()` method with a constructor that takes a `DbContextOptions` parameter that lets the config info be passed in upon construction. See the Web App Startup.cs for usage.
+
+#### Add EF Logging
+
+In the data project add the `Microsoft.Extensions.Logging.Console` nuget package.
+
+Inside the DbContext class create a new LoggerFactory and supporting code for EF Core 2 sql logging. See source for details.
